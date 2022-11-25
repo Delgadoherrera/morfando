@@ -61,31 +61,23 @@ module.exports = {
       })
       .then((usuario, e) => {
         if (usuario) {
-          console.log("usuario encontrado:", usuario);
-          res.status(200).send(usuario);
-        } else {
-          console.log("no se encuentra", e);
-          res.status(404).send('no encontrado');
-        }
-      })
-      .catch((error) => res.status(400).send(error));
-
-    /*         if (usuario) {
           if (usuario) {
             let token = jwt.sign({ correo: req.params.mail }, "secret", {
               expiresIn: "1h",
             });
-            res.status(200).send({ usuario: usuario, token: token })
+            res.status(200).send({ usuario: usuario, token: token });
+          } else {
+            res
+              .status(400)
+              .send("Usuario inactivo. Chequee su casilla de mail");
           }
-          else {
-            res.status(400).send("Usuario inactivo. Chequee su casilla de mail")
-          }
-        }
-        else {
-          res.status(404).send("Usuario no encontrado con ese correo o contraseña")
+        } else {
+          res
+            .status(404)
+            .send("Usuario no encontrado con ese correo o contraseña");
         }
       })
-      .catch((error) => res.status(400).send(error)); */
+      .catch((error) => res.status(400).send(error));
   },
 
   update(req, res) {
