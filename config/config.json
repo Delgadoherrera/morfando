@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": "1234",
+    "database": "morfando-inc",
+    "host": "35.224.234.92",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "1234",
+    "database": "morfando-inc",
+    "host": "35.224.234.92",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "1234",
+    "database": "morfando-inc",
+    "host": "35.224.234.92",
+    "dialect": "mysql"
+  }
+}

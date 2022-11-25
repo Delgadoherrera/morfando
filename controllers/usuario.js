@@ -51,48 +51,34 @@ module.exports = {
   },
 
   logIn(req, res) {
-    console.log("reqparams", req.params.mail);
+    
     return usuario
       .findOne({
         where: {
-          correo: req.params.mail,
-          contrasenia: req.params.password,
+          correo: req.body.mail,
+          contrasenia: req.body.password,
         },
+
       })
       .then((usuario) => {
-        if (usuario) {
-          let token = jwt.sign({ correo: req.params.mail }, "secret", {
-            expiresIn: "1h",
-          });
-          res.status(200).send({ usuario: usuario, token: token });
-        } else {
-         /*  res.status(400).send */
-          console.log("Usuario inactivo. Chequee su casilla de mail");
-        }
-        if (!usuario) {
-          res.status(404).send("Usuario no encontrado con ese correo o contraseña");
-        }
-      })
-
-      .catch((error) => res.status(400).send(error));
-
-    /*         if (usuario) {
-          if (usuario) {
-            let token = jwt.sign({ correo: req.params.mail }, "secret", {
+        if (usuario){
+          if (usuario.activo){
+            let token = jwt.sign({ correo: req.body.mail }, "secret",  {
               expiresIn: "1h",
             });
-            res.status(200).send({ usuario: usuario, token: token })
+            res.status(200).send({usuario: usuario, token: token})
           }
-          else {
+          else{
             res.status(400).send("Usuario inactivo. Chequee su casilla de mail")
           }
         }
-        else {
+        else{
           res.status(404).send("Usuario no encontrado con ese correo o contraseña")
         }
       })
-      .catch((error) => res.status(400).send(error)); */
+      .catch((error) => res.status(400).send(error));
   },
+
 
   update(req, res) {
     return usuario
@@ -116,60 +102,48 @@ module.exports = {
       .catch((error) => res.status(400).send(error));
   },
 
-  updateActivate(req, res) {
-    return usuario
-      .update(req.body, {
-        where: {
-          id: req.body.id,
-        },
-      })
-      .then((usuario) => res.status(200).send(usuario))
-      .catch((error) => res.status(400).send(error));
+  updateActivate (req, res){
+    return usuario.update(req.body, {
+      where: { 
+        id: req.body.id
+    }
+    })
+    .then(usuario => res.status(200).send(usuario))
+    .catch(error => res.status(400).send(error))
   },
 
-  updateActivateAccount(req, res) {
-    console.log("En el activateAccount");
-    console.log(req.body.correo);
-    console.log(req.body.activo);
-    return usuario
-      .update(req.body, {
-        where: {
-          correo: req.body.correo,
-        },
-      })
-      .then((usuario) => res.status(200).send(usuario))
-      .catch((error) => res.status(400).send(error));
+  updateActivateAccount (req, res){
+    console.log("En el activateAccount")
+    console.log(req.body.correo)
+    console.log(req.body.activo)
+    return usuario.update(req.body, {
+      where: { 
+        correo: req.body.correo
+    }
+    })
+    .then(usuario => res.status(200).send(usuario))
+    .catch(error => res.status(400).send(error))
   },
 
-  findFavouriteRestaurant(req, res) {
-    return usuario
-      .findOne({
-        include: [{ all: true, nested: false }],
-        where: { id: req.params.id },
-        attributes: { exclude: ["createdAt", "updatedAt"] },
-      })
-      .then((usuario) =>
-        res
-          .status(200)
-          .send({ usuario_id: usuario["id"], favoritos: usuario["favorite"] })
-      )
-      .catch((error) => res.status(400).send(error));
-  },
+  findFavouriteRestaurant (req, res) {
+    return usuario.findOne({
+     include: [{ all: true, nested: false }],
+     where: { id: req.params.id},
+     attributes: { exclude: ['createdAt', 'updatedAt']},
+    })
+    .then(usuario => res.status(200).send({usuario_id: usuario['id'], favoritos: usuario['favorite']}))
+    .catch(error => res.status(400).send(error))
+ },
 
-  findOwn(req, res) {
-    return usuario
-      .findOne({
-        include: [{ all: true, nested: true }],
-        where: {
+ findOwn (req, res) {
+  return usuario.findOne({
+   include: [{ all: true, nested: true }],
+      where: {
           id: req.params.id,
-        },
-      })
-      .then((usuario) =>
-        res.status(200).send({
-          usuario_id: usuario["id"],
-          misRestaurantes: usuario["restaurante"],
-        })
-      )
-      .catch((error) => res.status(400).send(error));
-  },
+      }
+  })
+  .then(usuario => res.status(200).send({usuario_id: usuario['id'], misRestaurantes: usuario['restaurante']}))
+  .catch(error => res.status(400).send(error))
+},
+ 
 };
