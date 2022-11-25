@@ -61,6 +61,7 @@ module.exports = {
 
       })
       .then((usuario) => {
+        console.log('usuario encontrado:',usuario)
         if (usuario) {
           if (usuario) {
             let token = jwt.sign({ correo: req.params.mail }, "secret", {
