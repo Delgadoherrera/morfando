@@ -50,7 +50,7 @@ module.exports = {
       .catch((error) => res.status(400).send(error));
   },
 
-   logIn(req, res) {
+  logIn(req, res) {
     console.log("reqparams", req.params.mail);
     return usuario
       .findOne({
@@ -63,6 +63,8 @@ module.exports = {
         if (usuario) {
           console.log("usuario encontrado:", usuario);
           res.status(200).send(usuario);
+        } else {
+          console.log("no se encuentra", e);
         }
       })
       .catch((error) => res.status(400).send(error));
