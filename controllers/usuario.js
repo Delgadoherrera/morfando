@@ -50,9 +50,9 @@ module.exports = {
       .catch((error) => res.status(400).send(error));
   },
 
-  async logIn(req, res) {
+   logIn(req, res) {
     console.log("reqparams", req.params.mail);
-    return await usuario
+    return usuario
       .findOne({
         where: {
           correo: req.params.mail,
