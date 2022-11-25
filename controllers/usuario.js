@@ -59,25 +59,40 @@ module.exports = {
           contrasenia: req.params.password,
         },
       })
-      .then((usuario, e) => {
+      .then((usuario) => {
         if (usuario) {
-          if (usuario) {
-            let token = jwt.sign({ correo: req.params.mail }, "secret", {
-              expiresIn: "1h",
-            });
-            res.status(200).send({ usuario: usuario, token: token });
-          } else {
-            res
-              .status(400)
-              .send("Usuario inactivo. Chequee su casilla de mail");
-          }
+          let token = jwt.sign({ correo: req.params.mail }, "secret", {
+            expiresIn: "1h",
+          });
+          res.status(200).send({ usuario: usuario, token: token });
         } else {
+          res.status(400).send("Usuario inactivo. Chequee su casilla de mail");
+        }
+        if (!usuario) {
           res
             .status(404)
             .send("Usuario no encontrado con ese correo o contraseña");
         }
       })
+
       .catch((error) => res.status(400).send(error));
+
+    /*         if (usuario) {
+          if (usuario) {
+            let token = jwt.sign({ correo: req.params.mail }, "secret", {
+              expiresIn: "1h",
+            });
+            res.status(200).send({ usuario: usuario, token: token })
+          }
+          else {
+            res.status(400).send("Usuario inactivo. Chequee su casilla de mail")
+          }
+        }
+        else {
+          res.status(404).send("Usuario no encontrado con ese correo o contraseña")
+        }
+      })
+      .catch((error) => res.status(400).send(error)); */
   },
 
   update(req, res) {
