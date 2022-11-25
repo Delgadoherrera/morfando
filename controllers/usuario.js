@@ -61,6 +61,7 @@ module.exports = {
       })
       .then((usuario) => {
         console.log("usuario encontrado:", usuario);
+        res.status(200).send(usuario);
       });
 
     /*         if (usuario) {
@@ -152,12 +153,10 @@ module.exports = {
         },
       })
       .then((usuario) =>
-        res
-          .status(200)
-          .send({
-            usuario_id: usuario["id"],
-            misRestaurantes: usuario["restaurante"],
-          })
+        res.status(200).send({
+          usuario_id: usuario["id"],
+          misRestaurantes: usuario["restaurante"],
+        })
       )
       .catch((error) => res.status(400).send(error));
   },
