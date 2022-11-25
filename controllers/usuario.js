@@ -65,6 +65,7 @@ module.exports = {
           res.status(200).send(usuario);
         } else {
           console.log("no se encuentra", e);
+          res.status(404).send('no encontrado');
         }
       })
       .catch((error) => res.status(400).send(error));
