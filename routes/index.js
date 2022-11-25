@@ -161,7 +161,7 @@ module.exports = (app) => {
   app.post("/user-favorites", restauranteFavoritoController.create);
   app.delete("/user-favorites", restauranteFavoritoController.updateActivate);
   app.get("/user:id", usuarioController.find);
-  app.post("/user/:mail/:password", usuarioController.logIn);
+  app.get("/user/:mail/:password", usuarioController.logIn);
   app.post("/user-forgot-password", sendEmailForgotPassword);
 
   app.post("/user-restart-password", usuarioController.restartPassword);
