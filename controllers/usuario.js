@@ -53,7 +53,7 @@ module.exports = {
   async logIn(req, res) {
     console.log("reqparams", req.params.mail);
     return await usuario
-      .findAll({
+      .findOne({
         where: {
           correo: req.params.mail,
           contrasenia: req.params.password,
