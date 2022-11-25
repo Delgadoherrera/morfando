@@ -66,12 +66,11 @@ module.exports = {
           });
           res.status(200).send({ usuario: usuario, token: token });
         } else {
-          res.status(400).send("Usuario inactivo. Chequee su casilla de mail");
+         /*  res.status(400).send */
+          console.log("Usuario inactivo. Chequee su casilla de mail");
         }
         if (!usuario) {
-          res
-            .status(404)
-            .send("Usuario no encontrado con ese correo o contraseña");
+          res.status(404).send("Usuario no encontrado con ese correo o contraseña");
         }
       })
 
