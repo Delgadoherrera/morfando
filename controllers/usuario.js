@@ -59,10 +59,13 @@ module.exports = {
           contrasenia: req.params.password,
         },
       })
-      .then((usuario) => {
-        console.log("usuario encontrado:", usuario);
-        res.status(200).send(usuario);
-      });
+      .then((usuario, e) => {
+        if (usuario) {
+          console.log("usuario encontrado:", usuario);
+          res.status(200).send(usuario);
+        }
+      })
+      .catch((error) => res.status(400).send(error));
 
     /*         if (usuario) {
           if (usuario) {
